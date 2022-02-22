@@ -15,7 +15,7 @@ class FdPassphraseResolver(PassphraseResolver):
   def read_passphrase(self, context: PassphraseContext) -> Passphrase:
     fd_s = self.get_context_value('descriptor', context)
     if fd_s is None or fd_s == "":
-      fd = self.get_context_value('default_fd')
+      fd = self.get_context_value('default_fd', context)
     else:
       try:
         fd = int(fd_s)
@@ -34,7 +34,8 @@ class FdPassphraseResolver(PassphraseResolver):
       if b[0] != self.RETURN:
         buff += b
     passphrase = buff.decode(self.get_context_value('encoding', context, 'utf-8'))
-    if self._close_after_read:
+    close_after_read: bool = self.get_context_value("close_after_read", context, False)
+    if close_after_read:
       os.close(fd)
       self._closed = True
     return self.normalize_passphrase(passphrase, context)
