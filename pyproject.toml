@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "get-passphrase"
-version = "0.1.1"
+version = "1.0.0"
 description = "Extensible passphrase resolver, supporting prompting as well as passphrases stored in environment variables, files or keychains"
 authors = [ "Sam McKelvie <dev@mckelvie.org>" ]
 license = "MIT"
